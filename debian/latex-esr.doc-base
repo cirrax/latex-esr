@@ -1,0 +1,9 @@
+Document: latex-esr
+Title: Print an inpayment slip with reference number as it is used in Switzerland
+Author: Christian Luginbühl dinkel@pimprecords.com
+Abstract: This manual describes what latex-esr is
+ and how it can be used 
+Section: Text
+
+Format: pdf
+Files: /usr/share/doc/texmf/latex-esr/latex-esr.pdf.gz

@@ -1,0 +1,111 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# GNU copyright 1997 to 1999 by Joey Hess.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+PACKAGE = latex-esr
+
+CFLAGS = -Wall -g
+
+DOCDIR = $(CURDIR)/debian/$(PACKAGE)/usr/share/doc/texmf
+TEXMF = $(CURDIR)/debian/$(PACKAGE)/usr/share/texmf
+
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
+endif
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	INSTALL_PROGRAM += -s
+endif
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# Add here commands to configure the package.
+
+	touch configure-stamp
+
+
+build: build-stamp
+
+build-stamp: configure-stamp 
+	dh_testdir
+
+	# Add here commands to compile the package.
+#	$(MAKE)
+# Create style files
+	latex esr.ins
+# Create pdf
+	pdflatex esr.dtx
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	# Add here commands to clean up after the build process.
+	rm -f esr.log esr.lox
+	rm -f *.sty *.pro
+	rm -f esr?.tex
+	rm -f esr.pdf
+	rm -f esr.aux
+	rm -f esr.glo
+	rm -f esr.idx
+
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	#dh_prep 
+	dh_clean -k
+	dh_installdirs
+
+	# Add here commands to install the package into latex-esr.
+	install -m 644 esr.sty $(TEXMF)/tex/latex/latex-esr
+	install -m 644 esrpos.sty $(TEXMF)/tex/latex/latex-esr
+	install -m 644 LICENSE $(TEXMF)/tex/latex/latex-esr
+	install -m 644 esr.pdf $(DOCDIR)/latex-esr
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+#	dh_installchangelogs ChangeLog
+	dh_installdocs
+#	dh_installexamples esr?.tex
+#	dh_install
+#	dh_installmenu
+#	dh_installdebconf	
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+#	dh_installcron
+#	dh_installinfo
+	dh_installman
+	dh_link
+	dh_installtex
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_perl
+#	dh_python
+#	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: build install
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure

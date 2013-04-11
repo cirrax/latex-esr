@@ -1,0 +1,20 @@
+Source: latex-esr
+Section: tex
+Build-Depends: debhelper (>= 4.0.0), pdflatex
+Build-Depends-Indep: texlive-latex-base, tex-common
+Priority: optional
+Maintainer: Benedikt Trefzer <benedikt.trefzer@cirrax.com>
+Standards-Version: 3.7.2
+
+Package: latex-esr
+Architecture: all
+Depends: texlive-latex-recommended, ${misc:Depends}
+Description: This LaTeX package gives you the possibility to print an inpayment slip with 
+ reference number as it is used in Switzerland and Switzerland only. The correct
+ term is ESR ('Einzahlungsschein mit Referenznummer') and often referred to as
+ 'Oranger Einzahlungsschein'. The package features a low level positioning style
+ file as well as a user level style file that formats the fields accoding to
+ specifications, does the checksum calculation (something TeX is not really the
+ prefect language for), as well as the possibility to preset some of the more
+ static fields in a configuration file.
+
