@@ -428,12 +428,25 @@
 % \begin{macro}{\esrposM@formatOCRB}
 % Sets font and size for fields in the ESR that use the OCR-B font. I chose to not
 % only print the `Kodierzeile' in OCR-B (which is the only one, that according to
-% the specifications must be in this font), but also the `Referenzzeile' and
-% `Betrag' (amount). It has aestethical reasons. Again, if you are unhappy, you
-% are free to change the macro call in |\esrposKodierzeile| and |\esrpos[Beleg]Betrag|.
+% the specifications must be in this font), but also the `Referenzzeile'.
+% It has aestethical reasons. Again, if you are unhappy, you
+% are free to change the macro call in |\esrposKodierzeile|.
 %
 %    \begin{macrocode}
 \newcommand{\esrposM@formatOCRB}[1] {
+  \esrposM@prePrint
+  \fontsize{10pt}{12pt}\ocrfamily{#1}%
+  \esrposM@postPrint
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\esrposM@formatBetrag}
+% Sets font and size for value fields (Betrag) amount in the ESR. 
+% This is in OCRB, same definition as |\esrposM@formatOCRB| per default.
+%
+%    \begin{macrocode}
+\newcommand{\esrposM@formatBetrag}[1] {
   \esrposM@prePrint
   \fontsize{10pt}{12pt}\ocrfamily{#1}%
   \esrposM@postPrint
@@ -502,20 +515,20 @@
 %    \begin{macrocode}
 \newcommand{\esrposBetrag}[2] {
   \begin{textblock*}{3.8cm}[1.0, 0.5](10.28cm, 24.42cm)
-    \esrposM@formatOCRB{\begin{flushright}#1\end{flushright}}
+    \esrposM@formatBetrag{\begin{flushright}#1\end{flushright}}
   \end{textblock*}
   \begin{textblock*}{3.8cm}[0, 0.5](11.03cm, 24.42cm)
-    \esrposM@formatOCRB{#2}
+    \esrposM@formatBetrag{#2}
   \end{textblock*}
 }
 %    \end{macrocode}
 %    \begin{macrocode}
 \newcommand{\esrposBelegBetrag}[2] {
   \begin{textblock*}{3.8cm}[1.0, 0.5](4.2cm, 24.42cm)
-    \esrposM@formatOCRB{\begin{flushright}#1\end{flushright}}
+    \esrposM@formatBetrag{\begin{flushright}#1\end{flushright}}
   \end{textblock*}
   \begin{textblock*}{3.8cm}[0, 0.5](4.95cm, 24.42cm)
-    \esrposM@formatOCRB{#2}
+    \esrposM@formatBetrag{#2}
   \end{textblock*}
 }
 %    \end{macrocode}
