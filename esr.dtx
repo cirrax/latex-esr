@@ -177,11 +177,14 @@
 %
 % \DescribeMacro{\esrposEinzahlungFuer}
 % \DescribeMacro{\esrposBelegEinzahlungFuer}
-% These two macros expect one argument, which is the string that is printed at
-% the preset location. Depending if your account is from a bank or ``Die Post'',
+% These two macros expect two arguments, which is the string that is printed at
+% the preset location and the string below (|\esrposZugunstenVon| or |\esrpostBelegZugunstenVon|)
+% Depending if your account is from a bank or ``Die Post'',
 % there goes either the Name and Address of your bank (in two lines, like
 % |Valiant Bank\\3001 Bern|) otherwise your name and address. The exact string
 % has to be asked from your financial institute.
+% If your Account is from ``Die Post'', which means |\esrposZugunstenVon| and
+% |\esrpostBelegZugunstenVon| are empty, the space for this string is enlarged.
 %
 % \DescribeMacro{\esrposZugunstenVon}
 % \DescribeMacro{\esrposBelegZugunstenVon}
@@ -471,16 +474,24 @@
 % allowed and where you can find the official documentation.
 %
 %    \begin{macrocode}
-\newcommand{\esrposEinzahlungFuer}[1] {
-  \begin{textblock*}{5.0cm}(6.58cm, 20.1cm)
-    \esrposM@formatNormal{#1}
+\newcommand{\esrposEinzahlungFuer}[2] {
+  \begin{textblock*}{2.1in}(2.6 in, 1in /6 )
+    \setbox0=\hbox{#2\unskip}\ifdim\wd0=0pt
+      \esrposM@formatNormal{\parbox[r][7in /6][c]{\linewidth}{#1}}
+    \else
+      \esrposM@formatNormal{\parbox[r][2in /6][c]{\linewidth}{#1}}
+    \fi
   \end{textblock*}
 }
 %    \end{macrocode}
 %    \begin{macrocode}
-\newcommand{\esrposBelegEinzahlungFuer}[1] {
-  \begin{textblock*}{5.0cm}(0.5cm, 20.1cm)
-    \esrposM@formatNormal{#1}
+\newcommand{\esrposBelegEinzahlungFuer}[2] {
+  \begin{textblock*}{2.1in}(.2 in, 1in /6 )
+  \setbox0=\hbox{#2\unskip}\ifdim\wd0=0pt
+      \esrposM@formatNormal{\parbox[r][7in /6][c]{\linewidth}{#1}}
+    \else
+      \esrposM@formatNormal{\parbox[r][2in /6][c]{\linewidth}{#1}}
+    \fi
   \end{textblock*}
 }
 %    \end{macrocode}
@@ -1258,11 +1269,11 @@
 % with the ESR.
 %    \begin{macrocode}
   \thispagestyle{empty}
-  \esrposBelegEinzahlungFuer{\esrV@einzahlungFuer}
+  \esrposBelegEinzahlungFuer{\esrV@einzahlungFuer}{\esrV@zugunstenVon}
   \esrposBelegZugunstenVon{\esrV@zugunstenVon}
   \esrposBelegKonto{\esrV@konto}
   \esrposBelegBetrag{\esrV@betragFranken}{\esrV@betragRappen}
-  \esrposEinzahlungFuer{\esrV@einzahlungFuer}
+  \esrposEinzahlungFuer{\esrV@einzahlungFuer}{\esrV@zugunstenVon}
   \esrposZugunstenVon{\esrV@zugunstenVon}
   \esrposKonto{\esrV@konto}
   \esrposBetrag{\esrV@betragFranken}{\esrV@betragRappen}
