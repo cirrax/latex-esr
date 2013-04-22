@@ -135,7 +135,11 @@
 % Most \LaTeX\ installations come with the |textpos| package installed
 % by default, otherwise have a look around at CTAN.
 %
-% \paragraph{Textpos calc}
+% \paragraph{Microtype package}
+%
+% This is used to print the amount into the fields correctly. 
+%
+% \paragraph{Calc package}
 %
 % Most \LaTeX\ installations come with the |calc| package installed
 % by default, otherwise have a look around at CTAN.
@@ -304,6 +308,26 @@
 % normal text flow, so its probably a good idea to launch it either right at the beginning
 % or at the end of a document.
 %
+% \DescribeMacro{\esrposPrinterCalibrate}
+% Since it is important to print certain fields on right position, the calibration of the printer
+% is very important. Postfinance has tools to check the correct position of the "Referenznummer".
+% As you never have these tools available when you need them, this function helps you calibrate youre
+% printer. To use, include |\esrposPrinterCalibrate| in your invoice. 
+% You can now check the correct printing of the fields by checking the following items:
+% \begin{enumerate}
+% \item The arrowhead pointing to the right page margin must fit the side edge.
+% \item The arrowhead pointing to the bottom of the page must fit the side edge.
+% \item The rulers printed on both arows must fit a 1mm scale otherwise the scale of the page is
+%    not correct
+% \end{enumerate}
+% To correct the position of the printout look at your printers handbook. For postscript printers
+% you can adjust the PPD file acordingly. A usefull tool could be alingnmargins found at\medskip
+% \small\textsl{ http://www.openprinting.org/download/printing/alignmargins}\normalsize\medskip
+%
+% 
+% Just to make it clear to everybody: At the end, youre responsible for printing according to the rules 
+% of postfinance. This macro is just a assistance to calibrate the printer.
+%
 % \subsubsection{esr.cfg}
 %
 % When running |(pdf)latex| on your document, |esr| tries to read a file named |esr.cfg| where
@@ -366,6 +390,7 @@
 \RequirePackage[absolute]{textpos}
 \RequirePackage{ocr}
 \RequirePackage{calc}
+\RequirePackage{microtype}
 %    \end{macrocode}
 %
 % Then we set the origin positioning to the top left corner of the payment slip, which (no
@@ -415,6 +440,41 @@
 \newcommand{\esrposM@postPrint} {
   \setlength{\parskip}{\esrposV@origParSkip}
   \setlength{\parindent}{\esrposV@origParIndent}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\esrposPrinterCalibrate}
+% This macro prints the two arrows to calibrate youre printer.
+% To print the picture environement is used.
+%
+%    \begin{macrocode}
+\newcommand{\esrposPrinterCalibrate} {
+  \esrposM@prePrint
+  \setlength{\unitlength}{1mm}
+  \begin{textblock*}{ 70mm }[0,0](\paperwidth - 70mm , 4in - 70mm )
+  \noindent
+      \linethickness{0.1mm}
+  \parbox[l][ 70mm][t]{70mm}{
+  \noindent
+    \begin{picture}(70,0)(2,70)
+      \put(45,0){ \line(0,1){65}}
+      \put(45,0){ \line(1,1){12}}
+      \put(45,0){ \line(-1,1){12}}
+      \multiput(44,10)(0,10){6}{ \line(1,0){2}}
+      \multiput(43,15)(0,10){6}{ \line(1,0){4}}
+      \multiput(44.5,11)(0,1){54}{ \line(1,0){1}}
+
+      \put(70,25){ \line(-1,0){65}}
+      \put(70,25){ \line(-1,-1){12}}
+      \put(70,25){ \line(-1,1){12}}
+      \multiput(60,24)(-10,0){6}{ \line(0,1){2}}
+      \multiput(55,23)(-10,0){6}{ \line(0,1){4}}
+      \multiput(59,24.5)(-1,0){54}{ \line(0,1){1}}
+    \end{picture}
+   }
+  \end{textblock*}
+  \esrposM@postPrint
 }
 %    \end{macrocode}
 % \end{macro}
@@ -559,7 +619,7 @@
   \begin{textblock*}{40mm}(2.5in, 11in /6 )
     \esrposM@formatBetrag{\parbox[t][.2in][c]{\linewidth}{\hfill#1}}
   \end{textblock*}
-  \begin{textblock*}{9mm}(4.33in+2mm, 11in /6)
+  \begin{textblock*}{9mm}(4.33in+3mm, 11in /6)
     \esrposM@formatBetrag{\parbox[t][.2in][c]{\linewidth}{#2}}
   \end{textblock*}
 }
@@ -569,7 +629,7 @@
   \begin{textblock*}{40mm}(.1in, 11in /6)
     \esrposM@formatBetrag{\parbox[t][.2in][c]{\linewidth}{\hfill#1}}
   \end{textblock*}
-  \begin{textblock*}{9mm}( 1.90in+2mm, 11in /6)
+  \begin{textblock*}{9mm}( 1.90in+3mm, 11in /6)
     \esrposM@formatBetrag{\parbox[t][.2in][c]{\linewidth}{#2}}
   \end{textblock*}
 }
