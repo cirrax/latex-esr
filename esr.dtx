@@ -452,6 +452,19 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\esrposM@formatBelegReferenznummer}
+% Sets font and size for reference number printed on the "Beleg".
+% It is common to print the number in small letters above the name of the person who pays.
+% Format is small OCR Font. So it fits on one line.
+%
+%    \begin{macrocode}
+\newcommand{\esrposM@formatBelegReferenznummer}[1] {
+  \esrposM@prePrint
+  \fontsize{6pt}{12pt}\ocrfamily{\textls*[1]{#1}}%
+  \esrposM@postPrint
+}
+%    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{\esrposM@formatBetrag}
 % Sets font and size for value fields (Betrag) amount in the ESR. 
@@ -477,6 +490,7 @@
 % \begin{macro}{\esrEinbezahltVon}
 % \begin{macro}{\esrBelegEinbezahltVon}
 % \begin{macro}{\esrReferenznummer}
+% \begin{macro}{\esrBelegReferenznummer}
 % \begin{macro}{\esrKodierzeile}
 % All of the remaining commands print the respective text (given in its parameter(s))
 % at the correct position. In section ??? I already discussed what parameters are
@@ -582,12 +596,20 @@
 }
 %    \end{macrocode}
 %    \begin{macrocode}
+\newcommand{\esrposBelegReferenznummer}[1] {
+  \begin{textblock*}{2.1in}[0,1](.2in, 13.9in /6)
+    \esrposM@formatBelegReferenznummer{\parbox[t][1in /6 ][t]{\linewidth}{\hfill#1}}
+  \end{textblock*}
+}
+%    \end{macrocode}
+%    \begin{macrocode}
 \newcommand{\esrposKodierzeile}[1] {
   \begin{textblock*}{5.5in}[1,1](8in, 20in /6)
     \esrposM@formatOCRB{\parbox[t][1 in /6 ][c]{\linewidth}{\hfill#1}}
   \end{textblock*}
 }
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -1294,7 +1316,8 @@
   \esrposZugunstenVon{\esrV@zugunstenVon}
   \esrposKonto{\esrV@konto}
   \esrposBetrag{\esrV@betragFranken}{\esrV@betragRappen}
-  \esrposBelegEinbezahltVon{\esrM@renderReferenznummer\medskip{}\\\esrV@einbezahltVon}
+  \esrposBelegEinbezahltVon{\esrV@einbezahltVon}
+  \esrposBelegReferenznummer{\esrM@renderReferenznummer}
   \esrposEinbezahltVon{\esrV@einbezahltVon}
   \esrposReferenznummer{\esrM@renderReferenznummer}
   \esrposKodierzeile{\esrM@renderKodierzeile}
