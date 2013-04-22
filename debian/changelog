@@ -1,5 +1,17 @@
+latex-esr (0.2-1) unstable; urgency=low
+
+  * correct URL for postfinance
+  * add seaparate field for reference number on "Belege"
+  * add calc package as required and recalculate field positions. make a \parbox around fields
+  * reposition EinzahlungFuer, enlarge, if ZugunstenVon is empty (Account from Post)
+  * new macro \esrposM@formatBetrag 
+  * OCR font needs to be 10pt according to postfinance !
+  * add \esrposPrinterCalibrate macro
+
+ -- Benedikt Trefzer <benedikt.trefzer@cirrax.com>  Mon,  22 Apr 2013 23:07:03 +0100
+
 latex-esr (0.1-1) unstable; urgency=low
 
   * Initial Release. 
 
- -- Benedikt Trefzer <benedikt.trefzer@cirrax.com>  Thu,  11 Apr 2013 23:07:03 +0900
+ -- Benedikt Trefzer <benedikt.trefzer@cirrax.com>  Thu,  11 Apr 2013 23:07:03 +0100
