@@ -2,8 +2,16 @@
 esr.sty
 esrpos.sty
 esr.pdf
-
 esr.log
 esr.aux
 esr.glo
 esr.idx
+build-stamp
+configure-stamp
+debian/files
+debian/latex-esr.debhelper.log
+debian/latex-esr.postinst.debhelper
+debian/latex-esr.postrm.debhelper
+debian/latex-esr.substvars
+debian/latex-esr/
+
