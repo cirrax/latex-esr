@@ -1,6 +1,6 @@
 Source: latex-esr
 Section: tex
-Build-Depends: debhelper (>= 4.0.0), pdflatex
+Build-Depends: debhelper (>= 4.0.0),texlive-latex-base
 Build-Depends-Indep: texlive-latex-base, tex-common
 Priority: optional
 Maintainer: Benedikt Trefzer <benedikt.trefzer@cirrax.com>
